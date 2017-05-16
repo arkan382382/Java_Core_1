@@ -8,7 +8,7 @@
  *      wywołanie konstruktora nadklasy
  */
 public class TestJavaCore1 {
-    public static void main(String[] argc){
+    public static void main(String[] argc) throws InterruptedException {
         /* Metody nie modyfikują parametrów liczbowych (both void & float) */
         float tmp1 = 25;
         System.out.println("Value*3 przed metodą void: " + tmp1);
@@ -40,6 +40,25 @@ public class TestJavaCore1 {
 
         Upper tmp5 = new Upper("Adam", 25, 2);
         Downer tmp6 = new Downer("ala", 22, 5, 31, 99);
+
+        Upper tmp7 = new Downer("alan", 22, 2, 25, 99);       // ok - tam gdzie obiekt nadklasy, tam też i podklasy (ale nie odwrotnie)
+        //Downer tmp8 = new Upper("akka", 20, 8);                               // nie można
+
+        /* Jak działa polimorfizm */
+        Downer down = new Downer("down", 12, 12, 12, 21);
+        Upper[] many = new Upper[2];
+        many[0] = down; // down
+        many[1] = tmp5; // up
+
+        for(int i = 0; i<many.length; i++){
+           // System.out.println("many[" + i + "]: " + many[i].getClass());
+            System.out.printf("\nmany[%d]: %s", i, many[i].getClass());
+        }
+        /* year should be 12 */
+        System.out.println("\n"+many[0].getYear());     // zwiększone o 100
+        System.out.println(many[1].getYear());         // jak podane            patrz na funkcję w klasie up i przesłoniętą w klasie down
+
+
 
 
 
@@ -173,7 +192,10 @@ class Downer extends Upper{
     }
     public int getYear(){
         int tempYear = super.getYear();                         // drugie zastosownie 'super' metoda z nadklasy
-        return tempYear + 10;
+        return tempYear + 100;
+    }
+    public int getSpecyficData(){
+        return this.specyficData;
     }
 }
 
