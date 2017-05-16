@@ -1,5 +1,11 @@
 /**
  * Created by Sebastian on 16.05.2017.
+ * this:
+ *      referencja do parametru niejawnego
+ *      wywołanie innego konstruktora tej samej klasy
+ * super:
+ *      wywołanie metody nadklasy
+ *      wywołanie konstruktora nadklasy
  */
 public class TestJavaCore1 {
     public static void main(String[] argc){
@@ -26,11 +32,16 @@ public class TestJavaCore1 {
         System.out.println("bool: " + tmp3.getVal_bool_in_first());
         System.out.println("objekt: " + tmp3.getVal_Point_in_first());
 
-        KonstruktorCheck2 tmp4 = new KonstruktorCheck2(1, "test", true, tmp2); // Konstruktor domyślny niedostępny
+        KonstruktorCheck2 tmp4 = new KonstruktorCheck2(1, "test", true, tmp2); // Konstruktor domyślny niedostępny bo zdefiniowano inny
         System.out.println("\n Second \n int: " + tmp4.getVal_int_in_second());
         System.out.println("string: " + tmp4.getVal_string_in_second());
         System.out.println("bool: " + tmp4.getVal_bool_in_second());
         System.out.println("objekt: " + tmp4.getVal_Point_in_second());
+
+        Upper tmp5 = new Upper("Adam", 25, 2);
+        Downer tmp6 = new Downer("ala", 22, 5, 31, 99);
+
+
 
 
     }
@@ -113,3 +124,82 @@ class KonstruktorCheck2{
         return this.val_Point_in_second;
     }
 }
+
+class Upper{
+    private String name;
+    private int year;
+    private int month;
+    public Upper(){                                  // konstruktor domyślny
+        this.name = "";
+        this.year = 0;
+        this.month = 0;
+    }
+    public Upper(String name, int year, int month){
+        this.setName(name);                         // ustawianie przez settera
+        this.year = year;                           // lub ustawianie na sztywno
+        this.month = month;
+    }
+    public Upper(int Compare){
+        this("a", 2, 4);        // wywołanie innego konstruktora tej samej klasy
+        this.year = Compare;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setYear(int year){
+        this.year = year;
+    }
+    public void setMonth(int month){
+        this.month = month;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public int getYear(){
+        return this.year;
+    }
+    public int getMonth(){
+        return this.month;
+    }
+}
+
+class Downer extends Upper{
+    private int day;
+    private int specyficData;
+    public Downer(String name, int year, int month, int day, int specyficData){
+        super(name, year, month);                               // jeśli konstruktor podklasy nie wywołuje jawnie konstruktora nadklasy, wywołyuwany jest domyślny konstruktor nadklasy
+        this.day = day;
+        this.specyficData = specyficData;
+    }
+    public int getYear(){
+        int tempYear = super.getYear();                         // drugie zastosownie 'super' metoda z nadklasy
+        return tempYear + 10;
+    }
+}
+
+/**
+ *
+ Value*3 przed metodą void: 25.0
+ Wewnątrz metody: 75.0
+ Value po metodzie: 25.0
+
+ Value*3 przed metodą float: 25.0
+ Value w metodzie float75.0
+ Value po metodzie float: 25.0
+
+ Value przed metodą (obiekt): 30.0
+ Koniec metody (obiekt): 90.0
+ Value po metodzie (obiekt): 90.0
+
+ First
+ int: 0
+ string: null
+ bool: false
+ objekt: null
+
+ Second
+ int: 1
+ string: test
+ bool: true
+ objekt: Point@1540e19d
+ */
