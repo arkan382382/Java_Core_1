@@ -58,11 +58,6 @@ public class TestJavaCore1 {
         System.out.println("\n"+many[0].getYear());     // zwiększone o 100
         System.out.println(many[1].getYear());         // jak podane            patrz na funkcję w klasie up i przesłoniętą w klasie down
 
-
-
-
-
-
     }
     public static void tripleValue(float x){
         x = 3 * x;
