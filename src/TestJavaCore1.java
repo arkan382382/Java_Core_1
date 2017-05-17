@@ -58,6 +58,25 @@ public class TestJavaCore1 {
         System.out.println("\n"+many[0].getYear());     // zwiększone o 100
         System.out.println(many[1].getYear());         // jak podane            patrz na funkcję w klasie up i przesłoniętą w klasie down
 
+        Upper person = new Upper("Olek", 2005, 12);
+        Downer manager = new Downer("Alek", 2000, 2, 24, 10);
+
+     //   Downer manager2 = (Downer) person;
+        Upper person2 = (Upper) manager;
+      //  System.out.println("manager2 name: " + manager2.getName());
+      //  System.out.println("person2 name: " + person2.getName() + " in class: " + person2.getClass());  // class downer
+        if(manager instanceof Upper){                       // as up - working
+            System.out.println("manager instanceof Upper: " + (manager instanceof Upper));
+            Upper person3 = (Upper) manager;
+            System.out.println("person3 name: " + person3.getName() + " in class: " + person3.getClass());
+        }
+        /* Instanceof - zabezpieczenie podczas rzutowania */
+        System.out.println("person instanceof Downer: " + (person instanceof Downer));
+        if (person instanceof Downer){                      // isn't working - person isn't inscanceof Downer
+            Downer manager2 = (Downer) person;
+            System.out.println("manager2 name: " + manager2.getName() + " in class: " + manager2.getClass());
+        }
+
     }
     public static void tripleValue(float x){
         x = 3 * x;
